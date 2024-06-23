@@ -1,10 +1,10 @@
 //
-//  LineBreak.swift
+//  Tab.swift
 //
 
 import Foundation
 
-public struct LineBreak: StringComponent {
+public struct Tab: StringComponent {
     
     public var attributes: Attributes
     
@@ -13,10 +13,10 @@ public struct LineBreak: StringComponent {
     }
     
     public func build() -> NSAttributedString {
-        .init(string: "\n")
+        .init(string: "\t")
     }
     
-    public func add(_ attributes: Attributes) -> LineBreak {
+    public func add(_ attributes: Attributes) -> StringComponent {
         self
     }
 }

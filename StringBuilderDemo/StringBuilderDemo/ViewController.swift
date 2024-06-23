@@ -10,9 +10,12 @@ class ViewController: UIViewController {
     let url = URL(string: "https://github.com")!
     let image = UIImage(systemName: "square.and.arrow.down")
     
-    lazy var textView: UITextView = {
-        let view = UITextView()
-        view.isEditable = false
+    lazy var textView: UILabel = {
+        let view = UILabel()
+        view.backgroundColor = .secondarySystemFill
+        view.layer.masksToBounds = true
+        view.layer.cornerRadius = 20
+        view.numberOfLines = 0
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -27,51 +30,71 @@ class ViewController: UIViewController {
         view.addSubview(textView)
         
         NSLayoutConstraint.activate([
-            textView.heightAnchor.constraint(equalToConstant: 400),
             textView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             textView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            textView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24)
+            textView.heightAnchor.constraint(equalToConstant: 200),
+            textView.widthAnchor.constraint(equalToConstant: 200),
         ])
     }
     
+    var isOnline = true
+    var rating: Int = 3
+    
     func setupText() {
         textView.attributedText = NSAttributedString {
-            AttributedBlock {
-                Text("Hello, World!")
-                    .color(.systemCyan)
-                    .underline(.thick, color: .separator)
-                Space()
-                Text("👋")
-            } 
-            .font(.boldSystemFont(ofSize: 40))
+            Block {
+                Text("Chat title")
+                    .color(.label)
+                LineBreak()
+                Text("Author name")
+                    .color(.systemTeal)
+                LineBreak()
+                Text("some message text...")
+                    .color(.secondaryLabel)
+            }
+            .font(.systemFont(ofSize: 16))
+            .lineHeight(minimum: 20)
             .alignment(.center)
             
-            LineBreak()
-            LineBreak()
-            LineBreak()
+            LineBreak(2)
             
-            AttributedBlock {
-                Text("This is ")
-                Text("String Builder Demo")
-                    .font(.boldSystemFont(ofSize: 24))
-                    .color(.systemGreen)
-                Text(", created to show basic abilities of the library.")
-            }
-            .font(.systemFont(ofSize: 20))
-            .color(.label)
-            .lineSpacing(4)
-            
-            LineBreak()
-            LineBreak()
-            
-            AttributedBlock {
-                Attachment(image)
+            Block {
+                Text("User Name")
+                    .font(.boldSystemFont(ofSize: 22))
+                    .color(.label)
+                
+                LineBreak()
+                
+                Block {
+                    Text("is ")
+                    
+                    if isOnline {
+                        Text("online")
+                            .color(.systemGreen)
+                    } else {
+                        Text("offline")
+                            .color(.systemRed)
+                    }
+                }
+                .font(.italicSystemFont(ofSize: 16))
+                
+                LineBreak()
+                
+                Text("Rating")
+                
                 Space()
-                Link(url: url, alias: "Link to GitHub repository")
+                
+                for i in 0..<5 {
+                    if i < rating {
+                        Image(UIImage(systemName: "star.fill"))
+                            .color(.systemYellow)
+                    } else {
+                        Image(UIImage(systemName: "star.fill"))
+                            .color(.white)
+                    }
+                }
             }
-            .color(.link)
-            .font(.italicSystemFont(ofSize: 24))
-            .underline(.single, color: .link)
+            .alignment(.center)
         }
     }
 }

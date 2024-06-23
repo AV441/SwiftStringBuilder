@@ -1,12 +1,12 @@
 //
-//  Attachment.swift
+//  Image.swift
 //
 
 import UIKit
 
-public struct Attachment: StringComponent {
+public struct Image: StringComponent {
     
-    public enum AttachmentAlignment {
+    public enum Alignment {
         
         case ascender
         case descender
@@ -16,17 +16,17 @@ public struct Attachment: StringComponent {
     public var attributes: Attributes
     
     private let image: UIImage?
-    private let alignment: AttachmentAlignment
+    private let alignment: Alignment
     private let attachment: NSTextAttachment
     
-    public init(_ image: UIImage?, alignment: AttachmentAlignment = .default) {
+    public init(_ image: UIImage?, alignment: Alignment = .default) {
         self.image = image
         self.alignment = alignment
         self.attributes = [:]
         self.attachment = NSTextAttachment(image: image ?? UIImage())
     }
     
-    private init(_ image: UIImage?, alignment: AttachmentAlignment, attributes: Attributes = [:]) {
+    private init(_ image: UIImage?, alignment: Alignment, attributes: Attributes = [:]) {
         self.image = image
         self.alignment = alignment
         self.attributes = attributes
@@ -69,10 +69,10 @@ public struct Attachment: StringComponent {
         return .init(attachment: attachment)
     }
     
-    public func add(_ attributes: Attributes) -> Attachment {
+    public func add(_ attributes: Attributes) -> StringComponent {
         let newAttributes = attributes.reduce(into: self.attributes) { partialResult, attribute in
             partialResult[attribute.key] = attribute.value
         }
-        return Attachment(image, alignment: alignment, attributes: newAttributes)
+        return Image(image, alignment: alignment, attributes: newAttributes)
     }
 }

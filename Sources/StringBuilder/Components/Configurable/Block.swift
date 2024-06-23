@@ -2,15 +2,16 @@
 //  AttributedBlock.swift
 //
 
+import UIKit
 import Foundation
 
-public struct AttributedBlock: StringComponent {
+public struct Block: StringComponent {
     
     public var attributes: Attributes
     
     private let components: [StringComponent]
     
-    public init(@AttributedBlockBuilder _ builder: () -> [StringComponent]) {
+    public init(@StringBuilder _ builder: () -> [StringComponent]) {
         self.components = builder()
         self.attributes = [:]
     }
@@ -26,7 +27,7 @@ public struct AttributedBlock: StringComponent {
         }
     }
     
-    public func add(_ attributes: Attributes) -> AttributedBlock {
+    public func add(_ attributes: Attributes) -> StringComponent {
         let components = components.reduce(into: [StringComponent]()) { partialResult, component in
             let missingAttributes = attributes.reduce(into: attributes) { partialResult, attribute in
                 if component.attributes.keys.contains(attribute.key) {
@@ -35,6 +36,6 @@ public struct AttributedBlock: StringComponent {
             }
             partialResult.append(component.add(missingAttributes))
         }
-        return AttributedBlock(components: components)
+        return Block(components: components)
     }
 }

@@ -15,6 +15,11 @@ public struct Text: StringComponent {
         self.attributes = [:]
     }
     
+    public init(_ attributedString: NSAttributedString) {
+        self.string = attributedString.string
+        self.attributes = attributedString.attributes(at: 0, effectiveRange: nil)
+    }
+    
     private init(_ string: String, attributes: () -> Attributes) {
         self.string = string
         self.attributes = attributes()
@@ -24,7 +29,7 @@ public struct Text: StringComponent {
         .init(string: string, attributes: attributes)
     }
     
-    public func add(_ attributes: Attributes) -> Text {
+    public func add(_ attributes: Attributes) -> StringComponent {
         Text(string) {
             attributes.reduce(into: self.attributes) { partialResult, attribute in
                 partialResult[attribute.key] = attribute.value
