@@ -10,14 +10,11 @@ class ViewController: UIViewController {
     let url = URL(string: "https://github.com")!
     let image = UIImage(systemName: "square.and.arrow.down")
     
-    lazy var textView: UILabel = {
-        let view = UILabel()
-        view.backgroundColor = .secondarySystemFill
-        view.layer.masksToBounds = true
-        view.layer.cornerRadius = 20
-        view.numberOfLines = 0
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
+    let label: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
     override func viewDidLoad() {
@@ -27,61 +24,82 @@ class ViewController: UIViewController {
     }
     
     func setupView() {
-        view.addSubview(textView)
+        view.addSubview(label)
         
         NSLayoutConstraint.activate([
-            textView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            textView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            textView.heightAnchor.constraint(equalToConstant: 200),
-            textView.widthAnchor.constraint(equalToConstant: 200),
+            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            label.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 24),
+            label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -24)
         ])
     }
     
-    var isOnline = true
+    var trueOrFalse = Bool.random()
     var rating: Int = 3
     
     func setupText() {
-        textView.attributedText = NSAttributedString {
+        label.attributedText = NSAttributedString {
             Block {
-                Text("Chat title")
-                    .color(.label)
-                LineBreak()
-                Text("Author name")
-                    .color(.systemTeal)
-                LineBreak()
-                Text("some message text...")
-                    .color(.secondaryLabel)
-            }
-            .font(.systemFont(ofSize: 16))
-            .lineHeight(minimum: 20)
-            .alignment(.center)
-            
-            LineBreak(2)
-            
-            Block {
-                Text("User Name")
-                    .font(.boldSystemFont(ofSize: 22))
-                    .color(.label)
+                Block {
+                    Text("This is a sample text")
+                        .color(.label)
+                    
+                    Text(" with colored undeline")
+                        .color(.systemTeal)
+                        .underline(.single, color: .systemTeal)
+                    
+                    Text(" or strikethrough")
+                        .color(.systemIndigo)
+                        .strikethrough(.single, color: .systemIndigo)
+                }
+                .font(.boldSystemFont(ofSize: 22))
                 
-                LineBreak()
+                Text(" AND STROKE")
+                    .font(.italicSystemFont(ofSize: 24))
+                    .stroke(5)
+                    .color(.systemYellow)
+                
+                LineBreak(2)
+                
+                Text("You can check for any conditions and add ")
+                
+                if trueOrFalse {
+                    Text("green text if true.")
+                        .color(.systemGreen)
+                } else {
+                    Text("red text if false.")
+                        .color(.systemPink)
+                }
+                
+                LineBreak(2)
                 
                 Block {
-                    Text("is ")
+                    Text("Use blocks to provide common attributes for group of components, such as font, color, paragraph style etc.")
                     
-                    if isOnline {
-                        Text("online")
-                            .color(.systemGreen)
-                    } else {
-                        Text("offline")
-                            .color(.systemRed)
-                    }
+                    LineBreak()
+                    
+                    Text("red text")
+                        .color(.systemRed)
+                    LineBreak()
+                    Text("green text")
+                        .color(.systemGreen)
+                    LineBreak()
+                    Text("blue text")
+                        .color(.systemBlue)
+                    LineBreak()
+                    
+                    Text("attributes specified for components inside block will be applied only for that components, and common attributes also will be adde to all of the components inside the block")
+                        .lineSpacing(5)
                 }
-                .font(.italicSystemFont(ofSize: 16))
+                .font(.systemFont(ofSize: 18, weight: .medium))
+                .backgroundColor(.secondarySystemBackground)
+                .color(.systemPurple)
                 
-                LineBreak()
                 
-                Text("Rating")
+                LineBreak(2)
                 
+                Text("Add some images using loops or conditions, like this")
+                    .font(.boldSystemFont(ofSize: 22))
                 Space()
                 
                 for i in 0..<5 {
@@ -93,8 +111,20 @@ class ViewController: UIViewController {
                             .color(.white)
                     }
                 }
+                
+                LineBreak(2)
+                
+                Block {
+                    Text("Links are also supported with ")
+                    Link(url: url, alias: "link alias")
+                        .underline(.single, color: .systemBlue)
+                    Text(" or without ")
+                    Link(url: url)
+                        .underline(.single, color: .systemBlue)
+                }
+                .font(.monospacedDigitSystemFont(ofSize: 18, weight: .light))
             }
-            .alignment(.center)
+            .firstLineHeadIndent(20)
         }
     }
 }

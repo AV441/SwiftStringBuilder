@@ -42,7 +42,7 @@ public struct Image: StringComponent {
         let attachment = attributes.reduce(into: NSTextAttachment()) { result, attribute in
             switch (attribute.key, attribute.value) {
             case (.font, let value):
-                guard let font = value as? UIFont else { break }
+                guard let font = value as? UIFont else { return }
                 let ratio = image.size.width / image.size.height
                 let size = CGSize(width: font.pointSize * ratio, height: font.pointSize)
                 
