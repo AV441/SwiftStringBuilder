@@ -15,6 +15,11 @@ public struct Text: StringComponent {
         self.attributes = [:]
     }
     
+    public init(_ block: () -> String) {
+        self.string = block()
+        self.attributes = [:]
+    }
+    
     public init(_ attributedString: NSAttributedString) {
         self.string = attributedString.string
         self.attributes = attributedString.attributes(at: 0, effectiveRange: nil)

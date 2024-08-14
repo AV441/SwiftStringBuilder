@@ -39,8 +39,8 @@ class ViewController: UIViewController {
     
     func setupText() {
         label.attributedText = NSAttributedString {
-            Block {
-                Block {
+            TextBlock {
+                TextBlock {
                     Text("This is a sample text")
                         .color(.label)
                     
@@ -73,7 +73,7 @@ class ViewController: UIViewController {
                 
                 LineBreak(2)
                 
-                Block {
+                TextBlock {
                     Text("Use blocks to provide common attributes for group of components, such as font, color, paragraph style etc.")
                     
                     LineBreak()
@@ -114,7 +114,7 @@ class ViewController: UIViewController {
                 
                 LineBreak(2)
                 
-                Block {
+                TextBlock {
                     Text("Links are also supported with ")
                     Link(url: url, alias: "link alias")
                         .underline(.single, color: .systemBlue)

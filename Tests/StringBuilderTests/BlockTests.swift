@@ -2,8 +2,8 @@ import UIKit
 import Testing
 @testable import StringBuilder
 
-// MARK: - BlockTests
-@Suite struct BlockTests {
+// MARK: - TextBlockTests
+@Suite struct TextBlockTests {
     
     var stringOne: String = "Test1"
     var stringTwo: String = "Test2"
@@ -16,7 +16,7 @@ import Testing
                                   value: UIFont.systemFont(ofSize: 12),
                                   range: .init(location: 0, length: sampleString.length))
         let testString = NSAttributedString {
-            Block {
+            TextBlock {
                 Text(stringOne)
                 Text(stringTwo)
             }
@@ -36,7 +36,7 @@ import Testing
                                   range: .init(location: 0, length: sampleString.length))
         
         let testString = NSAttributedString {
-            Block {
+            TextBlock {
                 Text(stringOne)
                     .color(.black)
                 Text(stringTwo)

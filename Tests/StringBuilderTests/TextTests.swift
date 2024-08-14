@@ -17,6 +17,17 @@ import Testing
         #expect(testString == sampleString)
     }
     
+    @Test("Test Text component init with closure", arguments: [true, false])
+    func textFromClosure(_ argument: Bool) async throws {
+        let sampleString = NSAttributedString(string: argument ? string : string.uppercased())
+        let testString = NSAttributedString {
+            Text {
+                argument ? string : string.uppercased()
+            }
+        }
+        #expect(testString == sampleString)
+    }
+    
     @Test("Test Text component init with attributed string")
     func textFromAttributedString() async throws {
         let sampleString = NSAttributedString(attributedString: attributedString)

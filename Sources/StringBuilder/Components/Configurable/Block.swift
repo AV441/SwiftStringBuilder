@@ -1,11 +1,11 @@
 //
-//  AttributedBlock.swift
+//  TextBlock.swift
 //
 
 import UIKit
 import Foundation
 
-public struct Block: StringComponent {
+public struct TextBlock: StringComponent {
     
     public var attributes: Attributes
     
@@ -36,6 +36,6 @@ public struct Block: StringComponent {
             }
             partialResult.append(component.add(missingAttributes))
         }
-        return Block(components: components)
+        return TextBlock(components: components)
     }
 }
