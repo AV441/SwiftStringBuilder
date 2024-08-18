@@ -12,7 +12,7 @@ public struct Tab: StringComponent {
         self.attributes = [:]
     }
     
-    public func build() -> NSAttributedString {
+    public func build() -> NSMutableAttributedString {
         .init(string: "\t")
     }
     

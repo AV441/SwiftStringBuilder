@@ -25,7 +25,7 @@ public struct Link: StringComponent {
         self.attributes = attributes()
     }
     
-    public func build() -> NSAttributedString {
+    public func build() -> NSMutableAttributedString {
         var finalAttributes = attributes
         finalAttributes[.link] = url.absoluteString
         return .init(string: alias ?? url.absoluteString,

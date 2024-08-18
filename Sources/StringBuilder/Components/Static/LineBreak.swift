@@ -15,7 +15,7 @@ public struct LineBreak: StringComponent {
         self.numberOfLines = numberOfLines
     }
     
-    public func build() -> NSAttributedString {
+    public func build() -> NSMutableAttributedString {
         var lineBreaks: String = ""
         for _ in 0..<numberOfLines {
             lineBreaks.append("\n")

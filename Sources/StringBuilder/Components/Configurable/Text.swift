@@ -30,7 +30,7 @@ public struct Text: StringComponent {
         self.attributes = attributes()
     }
     
-    public func build() -> NSAttributedString {
+    public func build() -> NSMutableAttributedString {
         .init(string: string, attributes: attributes)
     }
     

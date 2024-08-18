@@ -33,7 +33,7 @@ public struct Image: StringComponent {
         self.attachment = NSTextAttachment(image: image ?? UIImage())
     }
     
-    public func build() -> NSAttributedString {
+    public func build() -> NSMutableAttributedString {
         guard
             let image,
             !attributes.isEmpty

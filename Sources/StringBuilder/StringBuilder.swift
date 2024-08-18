@@ -45,3 +45,22 @@ public extension NSAttributedString {
         })
     }
 }
+
+// MARK: - NSMutableAttributedString + StringComponent
+extension NSMutableAttributedString: StringComponent {
+    
+    public var attributes: Attributes {
+        guard length > 0 else { return [:] }
+        return self.attributes(at: 0, effectiveRange: nil)
+    }
+    
+    public func build() -> NSMutableAttributedString {
+        self
+    }
+    
+    public func add(_ attributes: Attributes) -> StringComponent {
+        addAttributes(attributes, range: NSRange(location: 0, length: length))
+        return self
+    }
+}
+
