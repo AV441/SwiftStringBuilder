@@ -25,7 +25,7 @@ let attributedString = NSAttributedString {
 |||
 | SPM support | 📦 |
 |||
-| 100% code coverage | 🪛 |
+| 100% code coverage | 🛠️ |
 
 
 
