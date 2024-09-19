@@ -166,4 +166,21 @@ import Testing
         #expect(testStringWithURL == sampleString)
         #expect(testStringWithPath == sampleString)
     }
+    
+    @Test("Test ranged attributes")
+    func ranges() async throws {
+        let sampleString = NSMutableAttributedString(string: "Test string ranges")
+        sampleString.addAttributes([.foregroundColor: UIColor.white, .backgroundColor: UIColor.black], range: .init(location: 0, length: 4))
+        sampleString.addAttributes([.foregroundColor: UIColor.black, .backgroundColor: UIColor.white], range: .init(location: 5, length: 6))
+        sampleString.addAttributes([.foregroundColor: UIColor.white, .backgroundColor: UIColor.black], range: .init(location: 12, length: 6))
+        
+        let testString = NSAttributedString {
+            Text("Test string ranges")
+                .color(.white, ranges: [.init(location: 0, length: 4), .init(location: 12, length: 6)])
+                .backgroundColor(.black, ranges: [.init(location: 0, length: 4), .init(location: 12, length: 6)])
+                .color(.black, ranges: [.init(location: 5, length: 6)])
+                .backgroundColor(.white, ranges: [.init(location: 5, length: 6)])
+        }
+        #expect(testString == sampleString)
+    }
 }

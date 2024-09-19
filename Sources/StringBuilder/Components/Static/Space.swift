@@ -16,7 +16,7 @@ public struct Space: StringComponent {
         .init(string: " ")
     }
     
-    public func add(_ attributes: Attributes) -> StringComponent {
+    public func add(_ attributes: Attributes, ranges: [NSRange]) -> StringComponent {
         self
     }
 }

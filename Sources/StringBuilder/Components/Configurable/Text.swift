@@ -6,18 +6,22 @@ import Foundation
 
 public struct Text: StringComponent {
     
-    public var attributes: Attributes
+    public var attributes: Attributes = [:]
+    
+    private var rangedAttributes: RangedAttributes = [:]
 
     private let string: String
     
+    private var totalRange: NSRange {
+        .init(location: 0, length: NSAttributedString(string: string).length)
+    }
+    
     public init(_ string: String) {
         self.string = string
-        self.attributes = [:]
     }
     
     public init(_ block: () -> String) {
         self.string = block()
-        self.attributes = [:]
     }
     
     public init(_ attributedString: NSAttributedString) {
@@ -25,20 +29,50 @@ public struct Text: StringComponent {
         self.attributes = attributedString.attributes(at: 0, effectiveRange: nil)
     }
     
-    private init(_ string: String, attributes: () -> Attributes) {
+    private init(_ string: String,
+                 attributes: () -> Attributes,
+                 rangedAttributes: () -> RangedAttributes) {
         self.string = string
         self.attributes = attributes()
+        self.rangedAttributes = rangedAttributes()
     }
     
     public func build() -> NSMutableAttributedString {
-        .init(string: string, attributes: attributes)
+        let mutable = NSMutableAttributedString(string: string, attributes: attributes)
+        rangedAttributes.forEach { range, attributes in
+            if totalRange.contains(range.lowerBound) && totalRange.contains(range.upperBound - 1) {
+                mutable.addAttributes(attributes, range: range)
+            }
+        }
+        return mutable
     }
     
-    public func add(_ attributes: Attributes) -> StringComponent {
+    public func add(_ attributes: Attributes, ranges: [NSRange]) -> StringComponent {
         Text(string) {
-            attributes.reduce(into: self.attributes) { partialResult, attribute in
-                partialResult[attribute.key] = attribute.value
+            if ranges.isEmpty {
+                attributes.reduce(into: self.attributes) { partialResult, attribute in
+                    partialResult[attribute.key] = attribute.value
+                }
+            } else {
+                self.attributes
             }
+        } rangedAttributes: {
+            ranges.reduce(into: self.rangedAttributes) { partialResult, range in
+                if let existingAttributesInRange = partialResult[range] {
+                    partialResult[range] = attributes.merge(with: existingAttributesInRange)
+                } else {
+                    partialResult[range] = attributes
+                }
+            }
+        }
+    }
+}
+
+extension [NSAttributedString.Key: Any] {
+    
+    func merge(with otherAttributes: [NSAttributedString.Key: Any]) -> [NSAttributedString.Key: Any] {
+        otherAttributes.reduce(into: self) { partialResult, attribute in
+            partialResult[attribute.key] = attribute.value
         }
     }
 }

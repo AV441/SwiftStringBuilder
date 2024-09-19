@@ -58,7 +58,7 @@ extension NSMutableAttributedString: StringComponent {
         self
     }
     
-    public func add(_ attributes: Attributes) -> StringComponent {
+    public func add(_ attributes: Attributes, ranges: [NSRange]) -> StringComponent {
         addAttributes(attributes, range: NSRange(location: 0, length: length))
         return self
     }

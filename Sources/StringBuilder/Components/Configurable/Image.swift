@@ -69,7 +69,7 @@ public struct Image: StringComponent {
         return .init(attachment: attachment)
     }
     
-    public func add(_ attributes: Attributes) -> StringComponent {
+    public func add(_ attributes: Attributes, ranges: [NSRange]) -> StringComponent {
         let newAttributes = attributes.reduce(into: self.attributes) { partialResult, attribute in
             partialResult[attribute.key] = attribute.value
         }

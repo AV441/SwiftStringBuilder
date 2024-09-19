@@ -27,7 +27,7 @@ public struct TextBlock: StringComponent {
         }
     }
     
-    public func add(_ attributes: Attributes) -> StringComponent {
+    public func add(_ attributes: Attributes, ranges: [NSRange]) -> StringComponent {
         self
     }
 }

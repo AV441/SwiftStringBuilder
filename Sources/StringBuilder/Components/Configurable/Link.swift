@@ -32,7 +32,7 @@ public struct Link: StringComponent {
                      attributes: finalAttributes)
     }
     
-    public func add(_ attributes: Attributes) -> StringComponent {
+    public func add(_ attributes: Attributes, ranges: [NSRange]) -> StringComponent {
         Link(url: url, alias: alias) {
             attributes.reduce(into: self.attributes) { partialResult, attribute in
                 partialResult[attribute.key] = attribute.value

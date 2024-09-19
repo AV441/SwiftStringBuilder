@@ -5,6 +5,7 @@
 import UIKit
 
 public typealias Attributes = [NSAttributedString.Key: Any]
+public typealias RangedAttributes = [NSRange: Attributes]
 
 // MARK: - StringComponent
 public protocol StringComponent {
@@ -19,7 +20,14 @@ public protocol StringComponent {
     /// Добавить атрибуты для компонента
     /// - Parameter attributes: Добавляемые атрибуты
     /// - Returns: `StringComponent`
-    func add(_ attributes: Attributes) -> StringComponent
+    func add(_ attributes: Attributes, ranges: [NSRange]) -> StringComponent
+}
+
+public extension StringComponent {
+    
+    func add(_ attributes: Attributes) -> StringComponent {
+        add(attributes, ranges: [])
+    }
 }
 
 // MARK: - StringComponent + Basic attributes
@@ -29,12 +37,12 @@ public extension StringComponent {
         add([.font: font])
     }
     
-    @discardableResult func color(_ color: UIColor) -> StringComponent {
-        add([.foregroundColor: color])
+    @discardableResult func color(_ color: UIColor, ranges: [NSRange] = []) -> StringComponent {
+        add([.foregroundColor: color], ranges: ranges)
     }
     
-    @discardableResult func backgroundColor(_ color: UIColor) -> StringComponent {
-        add([.backgroundColor: color])
+    @discardableResult func backgroundColor(_ color: UIColor, ranges: [NSRange] = []) -> StringComponent {
+        add([.backgroundColor: color], ranges: ranges)
     }
     
     @discardableResult func underline(_ style: NSUnderlineStyle, color: UIColor? = nil) -> StringComponent {
